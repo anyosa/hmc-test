@@ -1,0 +1,121 @@
+\noindent Tomando o logaritmo da expressão anterior, temos:
+
+\[
+\log L\left(\bm{\beta},\delta \mid\mathbf{y},\;\mathbf{X}\right)=\sum_{i=1}^{n} \left[(y_{i})\log \left[\left(\frac{\exp(\eta_{i})}{1+\exp(\eta_{i})}\right)^{\exp(\delta)}\right] + (1-y{i}) \log\left[1-\left(\frac{\exp(\eta_{i})}{1+\exp(\eta_{i})}\right)^{\exp(\delta)}\right]\right]
+\]
+
+%\[
+%L\left(\bm{\beta}\mid\mathbf{y},\;\mathbf{X}\right)=\exp\left\{ %n\bar{y}\beta_{0}+\beta_{1}\sum_{i=1}^{n} %x_{i}y_{i}-\sum_{i=1}^{n}\log\left(1+e^{\beta_{0}+\beta_{1}x_{i}}\right)\right\}.
+%\]
+
+No esquema do algoritmo do amostrador de Gibbs, um parâmetro é atualizado por vez, iterativamente. O processo é dado a seguir \cite{Ntzoufras2009}.
+
+\begin{itemize}
+	\item Para $t=1,\ldots,T$	
+	\begin{enumerate}
+		\item Estabelecer $\bm{\beta}=\left(\beta_{0}^{\left(t-1\right)},\beta_{1}^{\left(t-1\right)}\right)^{T}$.
+		\item Propor um novo valor $\beta_{0}^{'}$ de $N\left(\beta_{0},\bar{s}_{\beta_{0}}^{2}\right)$.
+		\item Estabelecer $\bm{\beta^{'}}=\left(\beta_{0}^{'},\beta_{1}^{\left(t-1\right)}\right)^{T}$.
+		\item Calcular $\log\alpha=\min\left(0,A\right)$ onde $A$ é dado por
+		$$A=\log\frac{f\left(y\mid\beta_{0}^{'},\beta_{1}\right)f\left(\beta_{0}^{'},\beta_{1}\right)}{f\left(y\mid\beta_{0},\beta_{1}\right)f\left(\beta_{0},\beta_{1}\right)}.$$
+		\item Atualizar $\bm{\beta}=\bm{\beta^{'}}$ com probabilidade $\alpha$ ou manter os mesmos valores de $\bm{\beta}$ com probabilidade $1-\alpha$.
+    	\item Propor um novo valor $\beta_{1}^{'}$ de $N\left(\beta_{1},\bar{s}_{\beta_{1}}^{2}\right)$.
+		\item Estabelecer $\bm{\beta^{'}}=\left(\beta_{0},\beta_{1}^{'}\right)^{T}$.
+		\item  Calcular $\log\alpha=\min\left(0,A\right)$ onde $A$ é dado por
+		$$A=\log\frac{f\left(y\mid\beta_{0},\beta_{1}^{'}\right)f\left(\beta_{0},\beta_{1}^{'}\right)}{f\left(y\mid\beta_{0},\beta_{1}\right)f\left(\beta_{0},\beta_{1}\right)}.$$
+		\item  Atualizar $\bm{\beta}=\bm{\beta^{'}}$ com probabilidade $\alpha$ ou manter os mesmos valores iniciais de $\bm{\beta}$ com probabilidade $1-\alpha$.
+		\item Estabelecer $\bm{\beta}^{\left(t\right)}=\bm{\beta}$.
+	\end{enumerate} 
+\end{itemize}
+
+\begin{itemize}
+\item Para $t=1,\ldots,T$	
+	\begin{enumerate}
+		\item Estabelecer $\bm{\theta}=\left(\beta_{0}^{\left(t-1\right)},\beta_{1}^{\left(t-1\right)},\delta^{\left(t-1\right)}\right)^{T}$.
+		\item Propor um novo valor $\beta_{0}^{'}$ de $N\left(\beta_{0},\bar{s}_{\beta_{0}}^{2}\right)$.
+		\item Estabelecer $\bm{\theta^{'}}=\left(\beta_{0}^{'},\beta_{1}^{\left(t-1\right)},\delta^{\left(t-1\right)}\right)^{T}$.
+		\item Calcular $\log\alpha=\min\left(0,A\right)$ onde $A$ é dado por
+		$$A=\log\frac{f\left(y\mid\beta_{0}^{'},\beta_{1},\delta\right)f\left(\beta_{0}^{'},\beta_{1},\delta\right)}{f\left(y\mid\beta_{0},\beta_{1},\delta\right)f\left(\beta_{0},\beta_{1},\delta\right)}.$$
+		\item Atualizar $\bm{\theta}=\bm{\theta^{'}}$ com probabilidade $\alpha$ ou manter os mesmos valores de $\bm{\theta}$ com probabilidade $1-\alpha$.
+		\item Propor um novo valor $\beta_{1}^{'}$ de $N\left(\beta_{1},\bar{s}_{\beta_{1}}^{2}\right)$.
+		\item Estabelecer $\bm{\theta^{'}}=\left(\beta_{0},\beta_{1}^{'},\delta^{\left(t-1\right)}\right)^{T}$.
+		\item  Calcular $\log\alpha=\min\left(0,A\right)$ onde $A$ é dado por
+		$$A=\log\frac{f\left(y\mid\beta_{0},\beta_{1}^{'},\delta\right)f\left(\beta_{0},\beta_{1}^{'},\delta\right)}{f\left(y\mid\beta_{0},\beta_{1},\delta\right)f\left(\beta_{0},\beta_{1},\delta\right)}.$$
+		\item  Atualizar $\bm{\theta}=\bm{\theta^{'}}$ com probabilidade $\alpha$ ou manter os mesmos valores iniciais de $\bm{\theta}$ com probabilidade $1-\alpha$.
+		\item Propor um novo valor $\delta^{'}$ de $U(-2,2)$.
+		\item Estabelecer $\bm{\theta^{'}}=\left(\beta_{0},\beta_{1},\delta^{'}\right)^{T}$.
+		\item  Calcular $\log\alpha=\min\left(0,A\right)$ onde $A$ é dado por
+		$$A=\log\frac{f\left(y\mid\beta_{0},\beta_{1},\delta^{'}\right)f\left(\beta_{0},\beta_{1},\delta^{'}\right)}{f\left(y\mid\beta_{0},\beta_{1},\delta\right)f\left(\beta_{0},\beta_{1},\delta\right)}.$$
+		\item  Atualizar $\bm{\theta}=\bm{\theta^{'}}$ com probabilidade $\alpha$ ou manter os mesmos valores iniciais de $\bm{\theta}$ com probabilidade $1-\alpha$.
+		\item Estabelecer $\bm{\theta}^{\left(t\right)}=\bm{\theta}$.
+	\end{enumerate}
+\end{itemize}
+	
+No primeiro passo, são estabelecidos os valores iniciais de $\bm{\beta}$. No segundo passo, é proposto um novo valor de $\beta_{0}^{'}$ gerado aleatoriamente da distribuição Normal com média $\beta_{0}$, que é igual ao valor do $\beta_{0}$ do primeiro passo, e variança $\bar{s}_{\beta_{0}}^{2}$, que é um parâmetro de calibração e é estabelecido segundo a escolha. No terceiro passo, é estabelecido $\beta^{'}$ como o valor proposto, considerando o $\beta_{0}^{'}$ gerado no passo anterior. No quarto passo, se calcula o valor de $A$ onde $f\left(y\mid\beta_{0},\beta_{1}\right)$ é a verossimilhança e $f\left(\beta_{0},\beta_{1}\right)$ é a conjunta das densidades da distribuições a priori, avaliada nos respectivos valores de $\beta_{0}$ e $\beta_{1}$ . No quinto passo se avalia se o valor de $\bm{\beta}$ vai ser atualizado a $\beta_{0}^{'}$ ou não. Até o quinto passo o parâmetro que é considero para atualizar é somente $\beta_{0}$. Desde o sexto ao noveno passo, seguimos um procedimento semelhante só para $\beta_{1}$. No décimo passo, finalmente é estabelecido um novo estado $(t)$ para $\beta$.
+	
+O procedimento é semelhante para as outras distribuições com as funções de ligação comuns. No caso dos modelos de regressão binária com funções de ligação potência ou potência reversa seria considerada a inclusão do parâmetro $\lambda$ na atualização de parâmetros e a priori de $\delta=\log\lambda$ no calculo de $A$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Como dito na introdução no nosso trabalho é de interesse fazer a estimação via o algoritmo Monte Carlo Hamiltoniano (MCH) desenvolvido por \citeonline{Duane1987}, na extensão No-U-Turn Sampler (NUTS) \cite{Hoffman2014}. A implementação do NUTS é feita no software Stan \cite{Carpenter2016}. A seguir será apresentado o algoritmo para o caso da regressão logística. 
+
+%Seja $\boldsymbol{\theta}=\left(\boldsymbol{\beta}\right)$, todos os coeficientes de regressão que estão no vetor $\boldsymbol{\beta}$. 
+Seja $\pi\left(\boldsymbol{\beta}\right)$ a priori do vetor de parâmetros dos coeficientes de regressão $\boldsymbol{\beta}$ e $\mathbf{L}\left(\boldsymbol{\beta}\mid\mathbf{y},\;\mathbf{X}\right)$ a verossimilhança. Sabemos que existe a seguinte relação de proporcionalidade na distribuição a posteriori:
+
+\begin{equation}
+\pi\left(\boldsymbol{\beta}\mid\mathbf{y},\;\mathbf{X}\right)\propto\mathbf{L}\left(\boldsymbol{\beta}\mid\mathbf{y},\;\mathbf{X}\right)\pi\left(\boldsymbol{\beta}\right)
+\end{equation}
+
+Segundo o apresentado por \citeonline{Neal1996}, a distribuição a posteriori pode-se representar como a distribuição canônica usando a energia potencial do sistema da dinâmica Hamiltoniana, $U\left(\boldsymbol{q}\right)$, de modo que para nosso caso:
+
+\begin{equation}
+U\left(\boldsymbol{\beta}\right)=-\log\left[\pi\left(\boldsymbol{\beta}\right)\mathbf{L}\left(\boldsymbol{\beta}\mid\mathbf{y},\;\mathbf{X}\right)\right]
+\end{equation}
+
+\noindent Vemos que o vetor $\boldsymbol{\beta}$ faz o papel de vetor de posição $\bm{q}$ na dinâmica Hamiltoniana. A forma de $U\left(\boldsymbol{\beta}\right)$ na equação 3.4 pode ser representada da seguinte expressão.
+
+\[
+U(\bm{\beta})=\frac{\beta_{0}^{2}}{2\sigma_{\beta_{0}}^{2}}+\frac{\beta_{1}^{2}}{2\sigma_{\beta_{1}}^{2}}-\sum_{i=1}^{n}\left[y_{i}\left(\beta_{0}+\beta_{1}x_{i}\right)-\log\left(1+\exp\left(\beta_{0}+\beta_{1}x_{i}\right)\right)\right]
+\]
+
+\noindent Dessa forma depois debem ser obtidas as derivadas parciais da energia potencial, segundo cada elemento que compõe o vetor de posição:
+\[
+\frac{\partial U}{\partial\beta_{0}}=\frac{\beta_{0}^{2}}{\sigma_{\beta_{0}}^{2}}-\sum_{i=1}^{n}\left[y_{i}-\frac{\exp\left(\beta_{0}+\beta_{1}x_{i}\right)}{1+\exp\left(\beta_{0}+\beta_{1}x_{i}\right)}\right]
+\]
+
+\[
+\frac{\partial U}{\partial\beta_{1}}=\frac{\beta_{1}^{2}}{\sigma_{\beta_{1}}^{2}}-\sum_{i=1}^{n} x_{i}\left[y_{i}-\frac{\exp\left(\beta_{0}+\beta_{1}x_{i}\right)}{1+\exp\left(\beta_{0}+\beta_{1}x_{i}\right)}\right]
+\]
+
+\noindent O conjunto de derivadas parciais obtidas para cada uma das variáveis da energia potencial, $\frac{\partial U}{\partial\beta_{0}}$ e $\frac{\partial U}{\partial\beta_{1}}$, recibe a notação de $\nabla_{q}U\left(\bm{q}\right)$. Como detalhado anteriormente, na regressão logística o vetor de posição $\bm{q}=\bm{\beta}=\left(\beta_{0},\beta_{1}\right)$, é de duas dimensões ($d=2$). Dessa forma, o vetor de momento $\bm{p}$ também será de duas dimensões, com valores gerados aleatoriamente da distribuição Normal multivariada de média zero com os componentes de $\bm{p}$ independentes, onde cada $i$ tem variância $m_{i}$. De forma que:
+
+\[
+K\left(p\right)=\sum_{i=1}^{d}\frac{p_{i}^{2}}{2m_{i}}.
+\]
+
+\noindent Com a distribuição canônica da energia potencial, $U\left(\boldsymbol{q}\right)$, e as derivadas parciais, $\nabla_{q}U\left(\bm{q}\right)$; podemos fornecer o algoritmo do MCH \cite{Neal2012}.
+
+\begin{itemize}
+	\item Para $t=1,\ldots,T$	
+	\begin{enumerate}
+		\item Estabelecer o vetor de posição inicial $\bm{q}=\bm{q}^{(t-1)}$.	
+		\item Gerar os $d$ valores iniciais do vetor de momento $\bm{p}$.
+		\item Estabelecer $\bm{p}^{(t-1)}=\bm{p}$.
+		\item Fazer $\bm{p}^{'}=\bm{p}-(\epsilon/2)\nabla_{q}U\left(\bm{q}\right)$.
+		\item De $i=1$ até $L$:
+		\begin{enumerate}
+			\item Fazer $\bm{q}^{'}=\bm{q}+\epsilon\bm{p}^{'}$.
+			\item Se $i=L$, fazer $\bm{p}^{'}-\epsilon\nabla_{q}U\left(\bm{q^{'}}\right)$.
+		\end{enumerate}
+		\item Fazer $\bm{p}^{'}=\bm{p}^{'}-(\epsilon/2)\nabla_{q}U\left(\bm{q}^{'}\right)$.
+		\item Fazer $\bm{p}^{'}=\bm{-p}^{'}$.
+		\item Calcular $\alpha=\min\left(1,A\right)$ onde $A$ é dado por
+		$$A=\exp\left(U\left(\bm{q}\right)-U\left(\bm{q}^{'}\right)+K\left(\bm{p}\right)-K\left(\bm{p}^{'}\right)\right)$$
+		\item Gerar $u$ de $U(0,1)$. Se $u<\alpha$, $\bm{q}^{(t)}=\bm{q}^{'}$, caso contrario, $\bm{q}^{(t)}=\bm{q}^{(t-1)}$
+	\end{enumerate}
+\end{itemize}
+
+\noindent Para o caso dos modelos de regressão binária com funções de ligação potência ou potência reversa o vetor de posição $q=\left(\bm{\beta},\lambda \right)$. Dessa forma $U\left(\boldsymbol{\beta},\lambda\right)=-\log\left[\pi\left(\boldsymbol{\beta}\right)\pi\left(\delta\right)\mathbf{L}\left(\boldsymbol{\beta},\lambda\mid\mathbf{y},\;\mathbf{X}\right)\right]$, além disso em $\nabla_{q}U\left(\bm{q}\right)$ deverá ser inclusa a derivada parcial $\frac{\partial U}{\partial\lambda}$.
+
+No algoritmo MCH precisa-se da discretização do tempo para obter a aproximação das equações hamiltonianas de modo que o método possa ser implementado no computador. Para poder fazer tal discretização utiliza-se o método Leapfrog, que é implementado no quinto passo do algoritmo dado acima. No método Leapfrog é necessário calibrar os parâmetros $\varepsilon$ e $L$ que determinam o tamanho do passo na discretização e o número de passos, respetivamente. No nosso trabalho as simulações e aplicações serão feitas com o algoritmo No-U-Turn, uma forma adaptativa do MCH que elimina a necessidade da calibração dos parâmetros da discretização. Isto é importante pois escolher valores pequenos ou grandes desses parâmetros pode trazer possíveis problemas como os detalhados na tabela 5. 
